@@ -1,0 +1,72 @@
+@charset "utf-8";
+/* CSS Document */
+
+.checkout{
+	margin-left: 75px;
+	width:95%;
+	height:auto;
+	margin-right:20px;
+	margin-bottom:20px;
+}
+.address{
+	height: 70px;
+	background: #fafdff;
+}
+.address p {
+	color: rgb(255, 87, 34);
+	font-size: 20px;
+}
+
+.header-address{
+	font-size: 16px;
+	font-weight: bold;
+}
+.body-address{
+	font-size: 16px;
+}
+.wrap table{
+	margin-top: 20px;
+}
+.wrap table tr td span{
+  height: 120px;
+  line-height: 120px;
+  white-space: nowrap;
+}	
+.wrap table tr td img{
+	width: 90px;
+	height: 120px;
+}
+.checkout-bottom{
+	width: 100%;
+	height: auto;
+	background: #fafdff;
+}
+.checkout-bottom table{
+	margin-top: 10px;
+	width: 400px;
+}
+.checkout-bottom table tr td{
+	font-size: 14px;
+	padding:10px;
+	text-align: left;
+}
+.checkout-bottom table tr td p{
+	font-size: 24px;
+	color: rgb(255, 87, 34);
+}
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

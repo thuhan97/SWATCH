@@ -1,0 +1,33 @@
+@charset "utf-8";
+/* CSS Document */
+
+.ordered p{
+	margin-top: 20px;
+}
+.note{
+	font-weight: bold;
+}
+.hotline{
+	color: red;
+	font-weight: bold;
+}	
+#return-home{
+	width:710px;
+	height:auto;
+	margin-right:30px;
+	}	
+
+#return-home a{
+	font-weight:bold;
+	color:#000;
+	text-decoration:none;
+	}	
+	
+#return-home a:hover{
+	color:#C40000;
+	}	
+	
+	
+	
+	
+	
