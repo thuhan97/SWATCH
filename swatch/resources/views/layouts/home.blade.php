@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-<span>Home</span>
+Home
 @endsection
 @section('slider')
 @include('layouts.slider')
@@ -9,262 +9,79 @@
 	<div class="wrap">
 		<div class="section group">
 		  <div class="cont span_2_of_3">
-		  	<h2 class="head">Sản phẩm nổi bật</h2>
-			<div class="top-box">
+		  	<h2 class="head">Sản phẩm khuyến mãi</h2>
+			<div class="top-box1">
+				<?php $i=0;?>
+				@foreach($salePr as $row)
 			 <div class="col_1_of_3 span_1_of_3"> 
-			   <a href="single.html">
+			   <a href="/swatch/product/{{$row->product->id}}">
 				<div class="inner_content clearfix">
 					<div class="product_image">
-						<img src="{{URL::asset('page/images/e1.jpg')}}" alt=""/>
+						<img src="{{URL::asset('dist/img/product/'.$row->product->image)}}" alt=""/>
 					</div>
-                    <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
+                     <div class="sale-box1"><span class="on_sale title_shop">Sale</span></div>
                     <div class="price">
 					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
+							<p class="title">{{$row->product->name}}</p>
 							<div class="price1">
-							  <span class="actual">$12.00</span>
+							  <span class="reducedfrom">{{$row->product->price}}</span>
+							  <span class="actual">{{$row->discount}}</span>
 							</div>
 						</div>
 						<div class="cart-right"> </div>
-						<div class="clear"></div>
+						<div class="clearfix"></div>
 					 </div>				
                    </div>
                  </a>
 				</div>
-			   <div class="col_1_of_3 span_1_of_3">
-			   	 <a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e2.jpg')}}" alt=""/>
-					</div>
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-				  <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e3.jpg')}}" alt=""/>
-					</div>
-                    <div class="sale-box1"><span class="on_sale title_shop">Sale</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="reducedfrom">$66.00</span>
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="clear"></div>
-			</div>	
-			<div class="top-box">
-			  <div class="col_1_of_3 span_1_of_3">
-			  	 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e4.jpg')}}" alt=""/>
-					</div>
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-					<a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e5.jpg')}}" alt=""/>
-					</div>
-					 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e6.jpg')}}" alt=""/>
-					</div>
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                 </a>
-				</div>
-				<div class="clear"></div>
-			</div>	
-			<div class="top-box1">
-			  <div class="col_1_of_3 span_1_of_3">
-			  	 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e7.jpg')}}" alt=""/>
-					</div>
-                     <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e8.jpg')}}" alt=""/>
-					</div>
-					 <div class="sale-box1"><span class="on_sale title_shop">Sale</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="reducedfrom">$66.00</span>
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				  <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e9.jpg')}}" alt=""/>
-					</div>
-                   	 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="clear"></div>
-			</div>	
+				<?php $i++;
+				if($i%3==0) echo '</div><div class="top-box1">';
+					?>
+				@endforeach
+				
+			</div>		
+			<div class="clear"></div>	
+		</br>
 		  <h2 class="head">Sản phẩm đặc biệt</h2>
-		  <div class="top-box1">
+		 
+		 	 <div class="top-box1">	
+		 	 	<?php $i=0;?>
+		 	 	@foreach($specialPr as $row)	
 			  <div class="col_1_of_3 span_1_of_3">
-			  	 <a href="single.html">
+			  	  <a href="/swatch/product/{{$row->id}}">
 				 <div class="inner_content clearfix">
 					<div class="product_image">
-						<img src="{{URL::asset('page/images/e10.jpg')}}" alt=""/>
+						<img src="{{URL::asset('dist/img/product/'.$row->image)}}" alt=""/>
 					</div>
-                     <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
+                     <div class="sale-box"><span class="on_sale title_shop">Special</span></div>	
                     <div class="price">
 					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
+							<p class="title">{{$row->name}}</p>
 							<div class="price1">
-							  <span class="actual">$12.00</span>
+							  <span class="reducedfrom"><?php if(isset($row->sale->discount)) echo $row->price.'đ'; else echo "";?> </span>
+							  <span class="actual">{{(isset($row->sale->discount))?$row->sale->discount : $row->price }} đ</span>
 							</div>
 						</div>
 						<div class="cart-right"> </div>
 						<div class="clear"></div>
 					 </div>				
                    </div>
-                   </a>
+                   </a>     	
 				</div>
-				<div class="col_1_of_3 span_1_of_3">
-					 <a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e4.jpg')}}" alt=""/>
-					</div>
-				    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e3.jpg')}}" alt=""/>
-					</div>
-                   	 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="clear"></div>
+				<?php $i++;
+				if($i%3==0) echo '</div><div class="top-box1">';
+					?>
+				@endforeach
 			</div>	
+			<div class="clear"></div>
+			</br>
+			
 	        <h2 class="head">Sản phẩm mới</h2>	
 		    <div class="section group">
+		    	<?php $i=0;?>
+		    	@foreach($newPr as $row)
 			  <div class="col_1_of_3 span_1_of_3">
-			  	 <a href="single.html">
+			  	  <a href="/swatch/product/{{$row->id}}">
 				 <div class="inner_content clearfix">
 					<div class="product_image">
 						<img src="{{URL::asset('page/images/e2.jpg')}}" alt=""/>
@@ -272,57 +89,22 @@
                      <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
                     <div class="price">
 					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
+							<p class="title">{{$row->name}}</p>
 							<div class="price1">
-							  <span class="actual">$12.00</span>
+							  <span class="reducedfrom"><?php if(isset($row->sale->discount)) echo $row->price.'đ'; else echo "";?>  </span>
+							  <span class="actual">{{(isset($row->sale->discount))?$row->sale->discount : $row->price }} đ</span>
 							</div>
 						</div>
-						<div class="cart-right"> </div>
+						<div class="cart-right"><a href="/swatch/addToCart/{{$row->id}}"></a> </div>
 						<div class="clear"></div>
 					 </div>				
                    </div>
                    </a>
 				</div>
-				<div class="col_1_of_3 span_1_of_3">
-					<a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e1.jpg')}}" alt=""/>
-					</div>
-					 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e5.jpg')}}" alt=""/>
-					</div>
-                   	 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
+				<?php $i++;
+				if($i%3==0) echo '</div><div class="top-box1">';
+					?>
+				@endforeach
 				<div class="clear"></div>
 			</div>			 						 			    
 		  </div>

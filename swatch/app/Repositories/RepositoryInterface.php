@@ -1,10 +1,9 @@
 <?php
 namespace App\Repositories;
-interface ModelRepositoryInterface{
-	public function index();
-	public function getById($id);
+interface RepositoryInterface{
+	public function getAll();
+	public function find($id);
 	public function create(array $attributes);
-	public function searchByName(Request $request);
 	public function update($id,array $attributes);
 	public function delete($id);
 }

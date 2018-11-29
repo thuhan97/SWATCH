@@ -5,7 +5,7 @@
  @section('content')
   <section class="content-header">
                <h2>Danh mục sản phẩm</h2>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Thêm danh mục </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="add_cate" >Thêm danh mục </button></section>
   </section>
   <section class="content">
             <table class="table table-bordered" id="table" style="width:800px;">
@@ -17,14 +17,16 @@
                   </tr>
                </thead>
                <tbody>
+                @foreach($categories as $row)
                 <tr>
-                  <td>1000</td>
-                  <td>Đồng hồ nam</td>
+                  <td>{{$row->id}}</td>
+                  <td>{{$row->name}}</td>
                   <td>
-                    <a> <i class="fa fa-edit"></i></a>
-                      <a> <i class="fa fa-trash"></i></a>
+                  <a data-toggle="modal"  id="{{$row->id}}" class="edit_cate" data-target="#myModal" ><i class="fa fa-edit" ></i></a>
+                  <a id="{{$row->id}}" class="delete_cate" > <i class="fa fa-trash"></i></a>
                   </td>
                 </tr>
+                @endforeach
                </tbody>
             </table>
   </section>
@@ -35,30 +37,113 @@
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Thêm danh mục</h4>
+          <h4 class="modal-title"></h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
         <!-- Modal body -->
+         <form role="form" method="post" id="form_insert" action="">
         <div class="modal-body">
-          <form action="#">
+         
              @csrf
+             <input type="hidden" id="id" value="">
               <div class="form-group">
                 <label for="email">Tên danh mục</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="name" id="name" value="">
               </div>
-          </form>
+           </form>     
         </div>  
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary pull-left">Lưu</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+          <button type="submit"  class="btn btn-primary pull-left insert">Lưu</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" >Đóng</button>
         </div>
-        
+     
       </div>
     </div>
   </div>
        <script>
+         $(document).ready(function() {
+          $('#table').DataTable();
+        } );
+
+          // $(document).ready(function() {
+
+
+          /**
+          get value to edit
+          */
+           $('.edit_cate').click(function() {
+              $('.modal-title').text("Sửa danh mục");
+              var id=$(this).attr('id');
+              var url = '/admin/categories/'+id;
+              $.ajax({
+                type : 'get',
+                url  : url,
+                data : {'id':id},
+                success:function(data){
+                  // $('#id').val(data.id);
+                  $('#id').val(JSON.parse(data).id);
+                  $('#name').val(JSON.parse(data).name);
+                  // $('#myModal').modal('show');
+                  console.log(JSON.parse(data));
+                  console.log(JSON.parse(data).name);
+                }
+              }); 
+            });
+          // }); 
+          $('#add_cate').click(function(){
+               $('.modal-title').text("Thêm danh mục");
+               $('#id').val('');
+               $('#name').val('');
+            });
+          /**  
+          insert data in database
+          */
+          $('.insert').click(function(event){
+              event.preventDefault();
+              name=$('#name').val();
+              if(name==''){
+                $('#name').after('<span style="color: red;">Name is required.</span>');
+                return false;
+              }
+              id=$('#id').val();
+              if(id==''){
+              var url = '/admin/categories/create';
+            }
+            else{
+              var url = '/admin/categories/update/'+id;
+            }
+              $.ajax({
+                type:"post",
+                url:url,
+                data: $("#form_insert").serialize() ,
+                success:function(data){
+                   // //$('#myModal').modal('hide');
+                    console.log(data);
+                    location.reload(); 
+                },
+                 error: function() {
+                 console.log("error");
+                }
+              });
+            });
+
+          $('.delete_cate').click(function(){
+            if (!confirm("Do you want to delete")){
+             return false;
+            }
+            id=$(this).attr('id');
+            $.ajax({
+              type:"get",
+              url:"/admin/categories/delete/"+id,
+              data:id,
+              success:function(data){
+                console.log(data);
+                location.reload();
+                },
+            });
+          });
        </script>
 @endsection

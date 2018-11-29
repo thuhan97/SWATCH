@@ -6,6 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminSwatch |@yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
@@ -21,6 +22,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
   <link rel="stylesheet" href="{{URL::asset('dist/css/skins/skin-blue.min.css')}}">
+  <!-- jQuery 3 -->
+  <script src="{{URL::asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="{{URL::asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{URL::asset('dist/js/adminlte.min.js')}}"></script>
+  <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,12 +90,7 @@ desired effect
 
 <!-- REQUIRED JS SCRIPTS -->
 
-<!-- jQuery 3 -->
-<script src="{{URL::asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="{{URL::asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{URL::asset('dist/js/adminlte.min.js')}}"></script>
+
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

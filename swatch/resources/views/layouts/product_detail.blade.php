@@ -1,38 +1,35 @@
-@extends('layouts.home')
+@extends('layouts.master')
 @section('title')
 	Product
 @endsection
-@section('slider')
-@include('layouts.slider')
-@endsection
+
 @section('content')
+	<div class="login">
      <div class="wrap">
 		<div class="cont span_2_of_3">
 		  	<div class="grid images_3_of_2">
 							
 					<a href="optionallink.html">
-						<img class="etalage_source_image" src="{{URL::asset('page/images/e1.jpg')}}" class="img-responsive" title="" />
+						<img class="etalage_source_image" src="{{URL::asset('dist/img/product/'.$product->image)}}" class="img-responsive" title="" />
 					</a>
 	            </div>
 		         <div class="desc1 span_3_of_2">
-		         	<h3 class="m_3">FAA02004B9</h3>
-		             <p class="m_5">5,790,000 đ</p> <span class="reducedfrom">6,170,000 đ</span>
+		         	<h3 class="m_3">{{$product->name}}</h3>
+		             <p class="m_5">{{(isset($product->sale->discount))?$product->sale->discount : $product->price }} đ</p> <span class="reducedfrom"><?php if(isset($product->sale->discount)) echo $product->price.'đ'; else echo "";?></span>
 		         	 <div class="btn_form">
-						<form>
-							<input type="submit" value="buy" title="">
-						</form>
+							
+							<a href="/swatch/addToCart/{{$product->id}}"><button type="button" class="btn btn-primary addToCart" id="{{$product->id}}">Thêm vào giỏ hàng</button></a>
+					
 					 </div>
-				     <p class="m_text2">CA0201-51E Thuộc bộ sưu tập Citizen Eco Gents với những nét khỏe khoắn, mạnh mẽ dành riêng cho nam giới. Bộ sưu tập sở hữu thiết kế nam tính với từng chi tiết, hình khối chắc chắn, cứng cáp. Tuy vậy, sự tài tình của các nghệ nhân giúp chiếc đồng hồ vẫn sở hữu được vẻ lịch lãm, đẳng cấp. Đặc biệt Citizen Eco Gents chỉ chạy bộ máy Eco – Drive không dùng pin, chạy bằng ánh sáng siêu bền bỉ và tiện lợi. </p>
+				     <p class="m_text2">{{$product->description}}</p>
 			     </div>
 			   <div class="clear"></div>	
 	    <div class="clients">
 	    <h3 class="m_3">10 sản phẩm khác cùng loại</h3>
 		 <ul id="flexiselDemo3">
-			<li><img src="{{URL::asset('page/images/e5.jpg')}}" /><a href="#">Category</a><p>5,000,000 đ</p></li>
-			<li><img src="{{URL::asset('page/images/e6.jpg')}}" /><a href="#">Category</a><p>5,000,000 đ</p></li>
-			<li><img src="{{URL::asset('page/images/e7.jpg')}}" /><a href="#">Category</a><p>5,000,000 đ</p></li>
-			<li><img src="{{URL::asset('page/images/e8.jpg')}}" /><a href="#">Category</a><p>5,000,000 đ</p></li>
-			<li><img src="{{URL::asset('page/images/e9.jpg')}}" /><a href="#">Category</a><p>5,000,000 đ</p></li>
+		 	@foreach($sameKind as $row)
+			<li><img src="{{URL::asset('dist/img/product/'.$row->image)}}" /><a href="/swatch/product/{{$row->id}}">{{$row->name}}</a><p>{{$row->price}} đ</p></li>
+			@endforeach
 		 </ul>
 	<script type="text/javascript">
 		$(window).load(function() {
@@ -81,6 +78,7 @@
 		});
 	</script>
 	<script type="text/javascript" src="{{URL::asset('page/js/jquery.flexisel.js')}}"></script>
+
      </div>
      <div class="toogle">
      	<h3 class="m_3">Chi tiết thông số kỹ thuật</h3>
@@ -100,39 +98,39 @@
      			</tr>
      			<tr>
      				<td>Thương hiệu</td>
-     				<td>Orient</td>
+     				<td>{{$product->brand->name}}</td>
      			</tr>
      			<tr>
      				<td>Nguồn gốc</td>
-     				<td>Nhật Bản</td>
+     				<td>{{$product->brand->category->name}}</td>
      			</tr>
      			<tr>
-     				<td>Giới tính</td>
-     				<td>Nam</td>
+     				<td>Đồng hồ dành cho</td>
+     				<td><?php if($product->gender== 'dong-ho-nam') echo "Nam"; elseif($product->gender== 'dong-ho-nu') echo "Nữ"; else echo "Cặp đôi";?></td>
      			</tr>
      			<tr>
      				<td>Kích cỡ</td>
-     				<td>41.5 mm</td>
+     				<td>{{$product->size}} mm</td>
      			</tr>
      			<tr>
      				<td>Chất liệu vỏ</td>
-     				<td>Thép không gỉ 316L</td>
+     				<td>{{$product->shell_material}}</td>
      			</tr>
      			<tr>
      				<td>Chất liệu dây</td>
-     				<td>Thép không gỉ 316L</td>
+     				<td>{{$product->chain_material}}</td>
      			</tr>
      			<tr>
      				<td>Chất liệu kính</td>
-     				<td>Kính cứng</td>
+     				<td>{{$product->glass_material}}</td>
      			</tr>
      			<tr>
      				<td>Độ chịu nước</td>
-     				<td>200 m</td>
+     				<td>{{$product->presure}} m</td>
      			</tr>
      			<tr>
      				<td>Bảo hành quốc tế</td>
-     				<td>1 năm</td>
+     				<td>{{$product->guarantee}}</td>
      			</tr>
      		</table>
      	</div>
@@ -161,51 +159,13 @@
 
      </div>
     </div>
-			<div class="rsingle span_1_of_single">
-				<h5 class="m_1">Danh mục sản phẩm</h5>
-					<ul class="kids">
-						<li><a href="#">Đồng hồ nam</a></li>
-						<li><a href="#">Đồng hồ nữ</a></li>
-						<li class="last"><a href="#">Đồng hồ đôi</a></li>
-					</ul>
-                   <section  class="sky-form">
-					<h4>Khoảng giá</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Dưới 2,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>2,000,000 đ-4,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>4,000,000 đ-6,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>6,000,000 đ-9,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>9,000,000 đ-15,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Trên 15,000,000 đ</label>
-								
-							</div>
-						</div>
-		        </section>
-		    </br>
-		       <section  class="sky-form">
-					<h4>Thương hiệu</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Gucci</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Edox</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Tissot</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Hamilton</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>Ogival</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Calvin Kelin</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Citizen</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Seiko</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Orient</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Michel Herbelin</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Elle</label>
-							</div>
-						</div>
-		       </section>
+			
+		      @include('layouts.right_bar')
 		       <script src="{{URL::asset('page/js/jquery.easydropdown.js')}}"></script>
 		      </div
 		      <div class="clear"></div>
 			</div>
 			 <div class="clear"></div>
 		   </div>
-	
+</div>
 @endsection

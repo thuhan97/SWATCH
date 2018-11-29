@@ -15,8 +15,6 @@
                      <th>Địa chỉ</th>
                      <th>Email</th>
                      <th>Số điện thoại</th>
-                     <th>Nghề nghiệp</th>
-                     <th>Ngày sinh</th>
                      <th>Giới tính</th>
                   </tr>
                </thead>
@@ -27,8 +25,6 @@
                     <td>123 Ha Noi</td>
                     <td>abc@gmail.com</td>
                     <td>123</td>
-                    <td>Sinh viên</td>
-                    <td>02-08-1997</td>
                     <td>Nữ</td>
                   </tr>
                </tbody>

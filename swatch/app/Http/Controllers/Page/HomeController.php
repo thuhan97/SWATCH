@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Page;
 use App\Http\Controllers\Controller;
-
+use App\Repositories\Product\ProductRepositoryInterface;
+use App\Repositories\Sale\SaleRepositoryInterface;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,8 +19,21 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('layouts.home');
+    private $productRepository;
+    private $saleRepository;
+
+    //* construct with middleware
+     public function __construct(ProductRepositoryInterface $productRepository, SaleRepositoryInterface $saleRepository)
+        {
+    //     $this->middleware('auth');
+        $this->productRepository=$productRepository;
+        $this->saleRepository= $saleRepository;
+
+        }
+    public function index(){
+        $newPr=$this->productRepository->getNewProduct();
+        $specialPr=$this->productRepository->getSpecialProduct();
+        $salePr= $this->saleRepository->getSale();
+        return view('layouts.home',compact('newPr','specialPr','salePr'));
     }
 }

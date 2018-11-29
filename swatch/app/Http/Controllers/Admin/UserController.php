@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Repositories\ModelRepositoryInterface;
-use yajra\Datatables\Datatables;
-
+use App\Repositories\User\UserRepositoryInterface;
+use Validator;
 class UserController extends Controller
 {
     /**
@@ -14,20 +13,20 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     private $user;
+     private $userRepository;
    
 
     //* construct with middleware
-    // public function __construct(ModelRepositoryInterface $brand)
-    // {
-    //     $this->middleware('auth');
-    //     $this->brand=$brand;
-    // }
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        //$this->middleware('auth');
+        $this->userRepository=$userRepository;
+    }
     public function index()
     {
         //
-       // $brands= $this->brand->index();
-        return view('admin.layout.user');
+        $users= $this->userRepository->getAll();
+        return view('admin.layout.user',compact('users'));
        
     }
 
@@ -36,43 +35,45 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(Request $request){
+
+       $validation= Validator::make($request->all(), [
+        'email' => 'required|email|unique:users',
+        'username' => 'required|unique:users',
+        'password'=>'required',
+        'level'=>'required',
+        'avatar' => 'required|image|mimes:jpg,jpeg,png,gif'
+    ]);
+       //echo json_encode("data");
+    if ($validation->passes()) {
+               $image= $request->file('avatar');
+               $new_name=rand().'.'.$image->getClientOriginalExtension();
+               $image->move(public_path('dist/img/user'),$new_name);
+               $this->userRepository->create([
+                    'email'=>$request->get('email'),
+                    'username'=>$request->get('username'),
+                    'password'=>bcrypt($request->get('password')),
+                    'level'=>$request->get('level'),
+                    'avatar'=>$new_name
+               ]);
+               return json_encode(["success"=>true]);
+            
+     }
+     else {
+        return response()->json([
+            'message'=>$validation->errors()->all(),
+            'class_name'=>'alert-danger'
+        ]);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show($id=null)
     {
-        //
+        $editUser=(isset($id))? $this->userRepository->find($id):null;
+        return json_encode($editUser);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function disable($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -83,7 +84,35 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $validation= Validator::make($request->all(), [
+        'email' => 'required|email',
+        'username' => 'required',
+        'password'=>'required',
+        'level'=>'required',
+        'avatar' => 'required|image|mimes:jpg,jpeg,png,gif'
+    ]);
+       //echo json_encode("data");
+    if ($validation->passes()) {
+               $image= $request->file('avatar');
+               $new_name=rand().'.'.$image->getClientOriginalExtension();
+               $image->move(public_path('dist/img/user'),$new_name);
+               $id=$request->id;
+               $this->userRepository->update($id,[
+                    'email'=>$request->get('email'),
+                    'username'=>$request->get('username'),
+                    'password'=>bcrypt($request->get('password')),
+                    'level'=>$request->get('level'),
+                    'avatar'=>$new_name
+               ]);
+               return json_encode(["success"=>true]);
+            
+     }
+     else {
+        return response()->json([
+            'message'=>$validation->errors()->all(),
+            'class_name'=>'alert-danger'
+        ]);
+        }
     }
 
     /**
@@ -92,4 +121,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function delete($id)
+    {
+        //
+        $this->userRepository->delete($id);
+        echo json_encode((["success"=>true]));
+    }
 }

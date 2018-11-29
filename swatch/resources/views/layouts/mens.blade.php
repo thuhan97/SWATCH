@@ -8,7 +8,7 @@
 @section('content')
      <div class="wrap">
 		<div class="cont span_2_of_3">
-		  	<h2 class="head">Đồng hồ nam</h2>
+		  	<h2 class="head"><?php if($gender=='dong-ho-nam') echo "Đồng hồ nam"; elseif($gender=='dong-ho-nu') echo "Đồng hồ nữ"; else echo "Đồng hồ đôi";?></h2>
 		  	<div class="mens-toolbar">
               <div class="sort">
                	<div class="sort-by">
@@ -37,20 +37,23 @@
 	   		<div class="clear"></div>
     	</div>
      	<div class="clear"></div>
-	</div>
-			<div class="top-box">
+		</div>
+		<div class="top-box">
+				<?php $i=0;?>
+				@foreach($products as $row)
 			 <div class="col_1_of_3 span_1_of_3"> 
-			   <a href="/swatch/product/1">
+			   <a href="/swatch/product/{{$row->id}}">
 				<div class="inner_content clearfix">
 					<div class="product_image">
-						<img src="{{URL::asset('page/images/e1.jpg')}}" alt=""/>
+						<img src="{{URL::asset('dist/img/product/'.$row->image)}}" alt=""/>
 					</div>
-                    <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
+                    <div class="sale-box"><span class="on_sale title_shop"><?php if($row->special==1) echo " Special"; else if($row->sale->id) echo "Sale";?></span></div>	
                     <div class="price">
 					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
+							<p class="title">{{$row->name}}</p>
 							<div class="price1">
-							  <span class="actual">$12.00</span>
+							 <span class="reducedfrom"><?php if(isset($row->sale->discount)) echo $row->price.'đ'; else echo "";?>  </span>
+							  <span class="actual">{{(isset($row->sale->discount))?$row->sale->discount : $row->price }} đ</span>
 							</div>
 						</div>
 						<div class="cart-right"> </div>
@@ -59,342 +62,15 @@
                    </div>
                  </a>
 				</div>
-			   <div class="col_1_of_3 span_1_of_3">
-			   	 <a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e2.jpg')}}" alt=""/>
-					</div>
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-				  <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e3.jpg')}}" alt=""/>
-					</div>
-                    <div class="sale-box1"><span class="on_sale title_shop">Sale</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="reducedfrom">$66.00</span>
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="clear"></div>
-			</div>		
-			<div class="top-box">
-			  <div class="col_1_of_3 span_1_of_3">
-			  	 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e4.jpg')}}" alt=""/>
-					</div>
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-					<a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e5.jpg')}}" alt=""/>
-					</div>
-					 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e6.jpg')}}" alt=""/>
-					</div>
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                 </a>
-				</div>
-				<div class="clear"></div>
-			</div>	
-			<div class="top-box1">
-			  <div class="col_1_of_3 span_1_of_3">
-			  	 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e7.jpg')}}" alt=""/>
-					</div>
-                     <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e8.jpg')}}" alt=""/>
-					</div>
-					 <div class="sale-box1"><span class="on_sale title_shop">Sale</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="reducedfrom">$66.00</span>
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				  <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e9.jpg')}}" alt=""/>
-					</div>
-                   	 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="clear"></div>
-			</div>	
-		 <h2 class="head">Staff Pick</h2>
-		  <div class="top-box1">
-			  <div class="col_1_of_3 span_1_of_3">
-			  	 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e10.jpg')}}" alt=""/>
-					</div>
-                     <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-					 <a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e4.jpg')}}" alt=""/>
-					</div>
-				    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e3.jpg')}}" alt=""/>
-					</div>
-                   	 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="clear"></div>
-			</div>		
-		   <h2 class="head">New Products</h2>	
-		    <div class="section group">
-			  <div class="col_1_of_3 span_1_of_3">
-			  	 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e2.jpg')}}" alt=""/>
-					</div>
-                     <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-					<a href="single.html">
-					<div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e1.jpg')}}" alt=""/>
-					</div>
-					 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="col_1_of_3 span_1_of_3">
-				 <a href="single.html">
-				 <div class="inner_content clearfix">
-					<div class="product_image">
-						<img src="{{URL::asset('page/images/e5.jpg')}}" alt=""/>
-					</div>
-                   	 <div class="sale-box"><span class="on_sale title_shop">New</span></div>	
-                    <div class="price">
-					   <div class="cart-left">
-							<p class="title">Lorem Ipsum simply</p>
-							<div class="price1">
-							  <span class="actual">$12.00</span>
-							</div>
-						</div>
-						<div class="cart-right"> </div>
-						<div class="clear"></div>
-					 </div>				
-                   </div>
-                   </a>
-				</div>
-				<div class="clear"></div>
-			</div>		 							 			    
+				<?php 
+					$i++;
+					if($i%3==0) echo '</div><div class="top-box1">'
+				?>
+				@endforeach
+			</div>
+			<div class="clear"></div>		   	 							 			    
 		  </div>
-			<div class="rsingle span_1_of_single">
-				<h5 class="m_1">Danh mục sản phẩm</h5>
-					<ul class="kids">
-						<li><a href="#">Đồng hồ nam</a></li>
-						<li><a href="#">Đồng hồ nữ</a></li>
-						<li class="last"><a href="#">Đồng hồ đôi</a></li>
-					</ul>
-                   <section  class="sky-form">
-					<h4>Khoảng giá</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Dưới 2,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>2,000,000 đ-4,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>4,000,000 đ-6,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>6,000,000 đ-9,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>9,000,000 đ-15,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Trên 15,000,000 đ</label>
-								
-							</div>
-						</div>
-		        </section>
-		    </br>
-		       <section  class="sky-form">
-					<h4>Thương hiệu</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Gucci</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Edox</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Tissot</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Hamilton</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>Ogival</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Calvin Kelin</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Citizen</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Seiko</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Orient</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Michel Herbelin</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Elle</label>
-							</div>
-						</div>
-		       </section>
-		      </div>
+			@include('layouts.right_bar')
 			<div class="clear"></div>
 			</div>
 		   </div>

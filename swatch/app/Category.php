@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use App\Brand;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,9 +13,8 @@ class Category extends Model
         'name',
     ];
     public $timestamp=true;
-    public function product()
-        {
-            return $this->hasMany(Product::class,'category_id','id');
-        }
+    public function brand(){
+        return $this->hasMany(Brand::class,'category_id','id');
+    }
 
 }

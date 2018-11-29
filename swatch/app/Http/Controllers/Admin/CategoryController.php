@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Repositories\ModelRepositoryInterface;
-use yajra\Datatables\Datatables;
-
+use Illuminate\Http\Request\DataRequest;
+use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Category;
 class CategoryController extends Controller
 {
     /**
@@ -14,20 +14,19 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     private $category;
+     protected  $categoryRepository;
    
 
-    //* construct with middleware
-    // public function __construct(ModelRepositoryInterface $category)
-    // {
-    //     $this->middleware('auth');
-    //     $this->category=$category;
-    // }
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        //$this->middleware('auth');
+        $this->categoryRepository=$categoryRepository;
+    }
     public function index()
     {
-        //
-       // $categories= $this->category->index();
-        return view('admin.layout.category');
+        
+        $categories= $this->categoryRepository->getAll();
+        return view('admin.layout.category', compact('categories'));
        
     }
 
@@ -36,54 +35,37 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function show($id=null){
+        $editCategory=(isset($id))? $this->categoryRepository->find($id):null;
+        return json_encode($editCategory);
+       //return view('admin.layout.category', compact('editCategory','id'));
+        
+    }
+    public function create(Request $request)
     {
-        //
+            # code...
+        // echo json_encode($request->name);
+       
+         $data =$request->all();
+         $this->categoryRepository->create($data);
+        // return response()->json(['msg'=>'update successfully','data'=>$data]) ;
+        // $category = new Category();
+        // $category->name = $request->name;
+        // $category->save();
+
+        echo json_encode(["success"=> true]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    
+     
+    public function update( Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+            $data= $request->id;
+            $data= $request->all();
+            $this->categoryRepository->update($id,$data); 
+            echo json_encode(["success"=> true]);
+        
+    
     }
 
     /**
@@ -92,8 +74,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $this->categoryRepository->delete($id);
+       echo json_encode((["success"=>true]));
     }
 }

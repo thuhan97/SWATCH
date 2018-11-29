@@ -30,7 +30,13 @@
                     <td>123</td>
                     <td>2</td>
                     <td>12.000.000</td>
-                    <td>Giao hàng</td>
+                    <td>
+                      <select>
+                        <option>Đặt hàng</option>
+                        <option>Giao hàng</option>
+                        <option>Hủy đơn</option>
+                      </select>
+                    </td>
                     <td>
                       <button class="btn btn-danger"><a href="/admin/orderDetail/1" style="text-decoration: none; color: #fff;">Xem Chi Tiết</a></button>
                     </td>

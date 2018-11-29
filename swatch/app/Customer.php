@@ -8,7 +8,7 @@ class Customer extends Model
 {
   protected $table='customers';
   protected $fillable=[
-  	'name','address','phone','email','career','birthday','gender',
+  	'name','address','phone','email','gender',
   ];
   public function order()
     {

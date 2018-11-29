@@ -13,6 +13,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!-- bootstrap 3.3.7 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="{{URL::asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
@@ -53,49 +54,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="menu">
 	        <ul class="megamenu skyblue">
 			<li class="active grid"><a href="/swatch">Home</a></li>
-			<li><a class="color4" href="#">Thương hiệu</a>
+			<li><a class="color4" href="#" id="brand">Thương hiệu</a>
 				<div class="megapanel">
 					<div class="row">
+						<?php $i=0;?>
+						@foreach($categories as $row)
 						<div class="col1">
 							<div class="h_nav">
-								<h4>Đồng hồ Thụy Sỹ</h4>
+								<h4>{{$row->name}}</h4>
 								<ul>
-									<li><a href="womens.html">Đồng hồ Gucci</a></li>
-									<li><a href="womens.html">Đồng hồ Edox</a></li>
-									<li><a href="womens.html">Đồng hồ Tissot </a></li>
-									<li><a href="womens.html">Đồng hồ Hamilton</a></li>
-									<li><a href="womens.html">Đồng hồ Ogival</a></li>
-									<li><a href="womens.html">Đồng hồ Calvin Klein</a></li>
+									@foreach($row->brand as $brand)
+									<li><a href="/swatch/brand/{{$brand->slug}}">{{$brand->name}}</a></li>
+									@endforeach
 								</ul>	
-							</div>							
-						</div>
-						<div class="col1">
-							<div class="h_nav">
-								<h4>Đồng hồ Pháp</h4>
-								<ul>
-									<li><a href="womens.html">Đồng hồ Michel Herbelin</a></li>
-									<li><a href="womens.html">Đồng hồ Elle</a></li>
-			
-								</ul>	
-							</div>							
-						</div>
-						</div>
-						<div class="col1">
-							<div class="h_nav">
-								<h4>Đồng hồ Nhật Bản</h4>
-								<ul>
-									<li><a href="womens.html">Đồng hồ Citizen</a></li>
-									<li><a href="womens.html">Đồng hồ Seiko</a></li>
-									<li><a href="womens.html">Đồng hồ Orient</a></li>
-									
-								</ul>	
-							</div>												
-						</div>
+							</div>						
+						</div>	
+						<?php $i++;
+								if($i%2==0) echo '</div><div class="row">'
+						?>
+					@endforeach	
 					</div>
+					
+				</div>
 				</li>				
-				<li><a class="color5" href="/swatch/mens">Đồng hồ Nam</a></li>
-				<li><a class="color6" href="/swatch/womens">Đồng hồ nữ</a></li>
-				<li><a class="color6" href="/swatch/couples">Đồng hồ đôi</a></li>
+				<li><a class="color5"  href="/swatch/dong-ho-nam" id="mens">Đồng hồ Nam</a></li>
+				<li><a class="color6" href="/swatch/dong-ho-nu" id="womens">Đồng hồ nữ</a></li>
+				<li><a class="color6" href="/swatch/dong-ho-doi" id="couples">Đồng hồ đôi</a></li>
 				<li><a class="color7" href="/swatch/about">Giới thiệu</a></li>
 				<li><a class="color7" href="/swatch/contact">Liên hệ</a></li>
 
@@ -110,14 +94,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 </div>
 	  <div class="tag-list">
 		<ul class="icon1 sub-icon1 profile_img">
-			<li><a class="active-icon c2" href="#"> </a>
+			<li><a class="active-icon c2" href="/swatch"></a>
 				<ul class="sub-icon1 list">
-					<li><h3>Chưa có sản phẩm trong giỏ hàng</h3><a href=""></a></li>
-					<li><p>Vui lòng chọn sản phẩm</p></li>
+					<li><h3><?php if(Cart::getContent()->count()==0) echo "Chưa có sản phẩm trong giỏ hàng"; else echo "Có ".Cart::getContent()->count()." sản phẩm trong giỏ hàng";?></h3></li>
+					<li><p><?php if(Cart::getContent()->count()==0) echo "Vui lòng chọn sản phẩm"; else echo "" ?></p></li>
 				</ul>
 			</li>
 		</ul>
-	    <ul class="last"><li><a href="/swatch/cart">Giỏ hàng (0)</a></li></ul>
+	    <ul class="last"><li><a href="/swatch/cart">Giỏ hàng ({{Cart::getContent()->count()}})</a></li></ul>
 	  </div>
     </div>
      <div class="clear"></div>

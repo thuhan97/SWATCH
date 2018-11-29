@@ -16,18 +16,19 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->tinyInteger('gender')->unsigned();
+            $table->integer('brand_id')->unsigned();
             $table->string('image');
             $table->integer('price');
-            $table->integer('category_id')->unsigned();
-            $table->integer('brand_id')->unsigned();
-            $table->integer('size')->unsigned();
+            $table->integer('size');
             $table->string('shell_material');
             $table->string('chain_material');
             $table->string('glass_material');
-            $table->string('presure');
+            $table->integer('presure');
             $table->string('guarantee');
-            $table->string('description');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->string('description')->nullable();
+            $table->tinyInteger('status')->nullable();
+            $table->tinyInteger('special')->nullable();
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->timestamps();
         });

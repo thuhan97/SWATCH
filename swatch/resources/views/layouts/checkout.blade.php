@@ -14,9 +14,9 @@
                 	<h4 class="title">Thanh toán</h4>
                     <div class="address">
                     <p> <i class="fa fa-map-marker" aria-hidden="true"></i> Địa chỉ nhận hàng </p>
-                        <span class="header-address">Han Nguyen (+84) 0354086955</span>&emsp;
-                        <span class="body-address">123, Yên Mỹ, huyện Yên Mỹ, tỉnh Hưng Yên</span>&emsp;
-                        <a href="">Thay đổi</a>
+                        <span class="header-address">{{$data['name']}} {{$data['phone']}}</span>&emsp;
+                        <span class="body-address">{{$data['address']}}</span>&emsp; 
+                        <span class="body-address">{{$data['email']}}</span>&emsp;
                     </div>
                     	<table class="table ">
                             <thead>
@@ -30,35 +30,68 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($data['cartItem'] as $row)
                              <tr>
-                                    <td width="25%"><img src="{{URL::asset('page/images/e1.jpg')}}"></td>
-                                    <td><span>FAA_G235Q</span></td>
-                                    <td><span>6,170,000 đ</span></td>
-                                    <td><span>1</span></td>
-                                    <td><span>6,170,000 đ</span></td>
+                                    <td width="25%"><img src="{{URL::asset('dist/img/product/'.$row->attributes->image)}}"></td>
+                                    <td><span>{{$row->name}}</span></td>
+                                    <td><span>{{$row->price}} đ</span></td>
+                                    <td><span>{{$row->quantity}}</span></td>
+                                    <td><span>{{$row->getPriceSum()}} đ</span></td>
                                 </tr> 
+                                @endforeach
                             </tbody>
                         </table>
                         <div class="checkout-bottom ">
                             <table class=" pull-right">
                                 <tr>
                                     <td>Tổng tiền hàng</td>
-                                    <td>6.170.000 đ</td>
+                                    <td>{{Cart::getTotal()}} đ</td>
                                 </tr>
                                 <tr>
-                                    <td>Phí vận chuyển</td>
-                                    <td>36.000 đ</td>
+                                    <td>Thuế</td>
+                                    <td>{{Cart::getTotal()*0.05}}  đ</td>
                                 </tr>
                                 <tr>
                                     <td>Tổng thanh toán</td>
-                                    <td><p>7.196.000 đ</p></td>
+                                    <td><p>{{Cart::getTotal() + Cart::getTotal()*0.05}} đ</p></td>
                                 </tr>
                             </table>
                              <div class="clear"></div>
                         </div>
                         </br>
-                       <a href="/swatch/complete"><button class="btn btn-danger btn-lg pull-right">Đặt hàng</button></a>
+                       <a href="" id="complete"><button class="btn btn-danger btn-lg pull-right">Đặt hàng</button></a>
                             <div class="clear"></div>
                     </div>
             </div>
+<script>
+$("#complete").click(function (event) {
+    event.preventDefault();
+     data = {
+        _token: '{!! csrf_token() !!}',
+        'name':'{{$data['name']}}' ,
+        'phone':{{$data['phone']}},
+        'email':'{{$data['email']}}',
+        'address':'{{$data['address']}}',
+        'gender':{{$data['gender']}},
+        'cartItem':[
+        @foreach($data['cartItem'] as $row){
+        'id':{{$row->id}},
+        'name':'{{$row->name}}',
+        'price':{{$row->price}},
+        'quantity':<?php echo $row->quantity; ?>, 
+        'image':'<?php echo $row->attributes->image?>',
+        },
+        @endforeach],
+    };
+    console.log(data);
+    $.ajax({
+    type:"post",
+    url:'/swatch/complete',
+    data:data,
+    success:function(data){
+        console.log(data);
+     }
+    });
+});
+</script>         
   @endsection

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
-use App\Repositories\ModelRepositoryInterface;
-use yajra\Datatables\Datatables;
+use App\Repositories\Sale\SaleRepositoryInterface;
+use App\Repositories\Product\ProductRepositoryInterface;
+use Validator;
+
 
 class SaleController extends Controller
 {
@@ -14,20 +16,23 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     private $sale;
+     private $saleRepository;
+     private $productRepository;
    
 
     //* construct with middleware
-    // public function __construct(ModelRepositoryInterface $brand)
-    // {
-    //     $this->middleware('auth');
-    //     $this->brand=$brand;
-    // }
+    public function __construct(SaleRepositoryInterface $saleRepository,ProductRepositoryInterface $productRepository)
+    {
+        //$this->middleware('auth');
+        $this->saleRepository=$saleRepository;
+        $this->productRepository=$productRepository;
+    }
     public function index()
     {
         //
-       // $brands= $this->brand->index();
-        return view('admin.layout.sale');
+        $products= $this->productRepository->getAll();
+        $sales= $this->saleRepository->getAll();
+        return view('admin.layout.sale', compact('sales','products'));
        
     }
 
@@ -36,21 +41,32 @@ class SaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $validation = Validator::make($request->all(),[
+            'product_id'=>'required',
+            'discount'=>'required',
+            'start_at'=>'required',
+            'end_at'=>'required'
+        ]);
+        if($validation->passes()){
+            $this->saleRepository->create([
+                'product_id'=>$request->get('product_id'),
+                'discount'=>$request->get('discount'),
+                'start_at'=>$request->get('start_at'),
+                'end_at'=>$request->get('end_at'),
+            ]);
+            echo json_encode(["success"=>true]);
+        }
+        else{
+            return response()->json([
+                'message'=>$validation->errors()->all(),
+                'class_name'=>'alert-danger'
+            ]);
+        }
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -60,7 +76,8 @@ class SaleController extends Controller
      */
     public function show($id)
     {
-        //
+        $eidtSale= $this->saleRepository->find($id);
+        return json_encode($eidtSale);
     }
 
     /**
@@ -69,10 +86,7 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -83,7 +97,29 @@ class SaleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $validation = Validator::make($request->all(),[
+            'product_id'=>'required',
+            'discount'=>'required',
+            'start_at'=>'required',
+            'end_at'=>'required'
+        ]);
+        if($validation->passes()){
+            $id=$request->id;
+            $this->saleRepository->update($id,[
+                'product_id'=>$request->get('product_id'),
+                'discount'=>$request->get('discount'),
+                'start_at'=>$request->get('start_at'),
+                'end_at'=>$request->get('end_at'),
+            ]);
+            echo json_encode(["success"=>true]);
+        }
+        else{
+            return response()->json([
+                'message'=>$validation->errors()->all(),
+                'class_name'=>'alert-danger'
+            ]);
+        }
+
     }
 
     /**
@@ -92,8 +128,9 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $this->saleRepository->delete($id);
+        echo json_encode(["success"=>true]);
     }
 }
