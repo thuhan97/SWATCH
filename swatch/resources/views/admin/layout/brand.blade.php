@@ -8,9 +8,9 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="add_brand">Thêm thương hiệu </button>
   </section>
   <section class="content">
-            <table class="table table-bordered" id="table" >
+            <table class="table table-bordered table-hover table-striped" id="table" >
                <thead>
-                  <tr>
+                  <tr style="background:gainsboro;">
                      <th>Số thương hiệu</th>
                      <th>Tên thương hiệu</th>
                      <th>Nguồn gốc</th>

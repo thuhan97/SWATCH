@@ -49,7 +49,9 @@ class LoginController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
 
-        if( Auth::attempt(['username' => $username, 'password' =>$password, 'level' => 1])) {
+        if( Auth::attempt(['username' => $username, 'password' =>$password])) {
+          $username=Auth::user()->username;
+          //print_r($username);
           return redirect()->route('admin.index');
         } else {
           $errors = new MessageBag(['errorlogin' => 'Username hoặc mật khẩu không đúng']);

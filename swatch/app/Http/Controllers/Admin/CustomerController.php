@@ -23,22 +23,17 @@ class CustomerController extends Controller
     public function index()
     {
         //
-       // $brands= $this->brand->index();
-        return view('admin.layout.customer');
+        $customer= $this->customer->getAll();
+        return view('admin.layout.customer', compact('customer'));
        
     }
 
-    public function add(Request $request){
-        $data=[
-        'name'=> $request->name,
-        'phone'=> $request->phone,
-        'email'=> $request->email,
-        'gender'=> $request->gender,
-        'address'=> $request->address,
-    ];
-        $this->customer->create($data);
+    public function delete($id){
+        $this->customer->delete($id);
         echo json_encode("success");
     }
+
+    
 
     
 }

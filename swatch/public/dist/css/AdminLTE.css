@@ -78,6 +78,7 @@ body {
   .sidebar-collapse .main-footer {
     margin-left: 0;
   }
+
 }
 @media (max-width: 767px) {
   .sidebar-open .content-wrapper,

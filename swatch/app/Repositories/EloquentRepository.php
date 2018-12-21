@@ -27,7 +27,7 @@ abstract class EloquentRepository implements RepositoryInterface{
 	 *get all
 	 */
 	  public function getAll(){
-	  	return $this->model->all();
+	  	return $this->model->orderBy('created_at','DESC')->get();
 	  }
 	  /**
 	  *get one

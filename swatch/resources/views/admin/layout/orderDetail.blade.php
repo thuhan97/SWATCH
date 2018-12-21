@@ -7,14 +7,32 @@
                <h2 >Chi tiết hóa đơn </h2>
   </section>
   <section class="content">
-            <h5><span>Mã hóa đơn: </span> </h5>
-            <h5><span>Mã Khách hàng: </span> </h5>
-            <h5><span>Tên Khách hàng: </span> </h5>
-            <h5><span>Địa chỉ nhận: </span> </h5>
-            <h5><span>Số điện thoại: </span> </h5>
+    <table class="table "  style="width: 200px;">
+      <tr>
+        <td>Mã hóa đơn:</td>
+        <td><strong> {{$order->id}}</strong></td>
+      </tr>
+      <tr>
+        <td>Mã Khách hàng:</td>
+        <td><strong> {{$order->customer_id}}</strong></td>
+      </tr>
+      <tr>
+        <td>Tên Khách hàng:</td>
+        <td><strong> {{$order->customer->name}}</strong></td>
+      </tr>
+      <tr>
+        <td>Địa chỉ nhận:</td>
+        <td><strong> {{$order->customer->address}}</strong></td>
+      </tr>
+      <tr>
+        <td>Số điện thoại</td>
+        <td><strong> {{$order->customer->phone}}</strong></td>
+      </tr>
+    </table>
+
             <table class="table table-bordered" id="table" >
                <thead>
-                  <tr>
+                  <tr style="background-color: #ccc;">
                      <th>Mã sản phẩm</th>
                      <th>Tên sản phẩm</th>
                      <th>Số lượng</th>
@@ -23,30 +41,32 @@
                   </tr>
                </thead>
                <tbody>
+                <script>
+                    console.log(<?php echo  $order->orderDetail;?>);
+                  </script>
+                @foreach($order->orderDetail as $row)
+                  
                   <tr>
-                    <td>1000</td>
-                    <td>FAABC09F</td>
-                    <td>2</td>
-                    <td>6.170.000 đ</td>
-                    <td>12.340.000 đ</td>
+                    <td>{{$row->product->id}}</td>
+                    <td>{{$row->product->name}}</td>
+                    <td>{{$row->quantity}}</td>
+                    <td>{{number_format($row->unit_price)}} đ</td>
+                    <td>{{number_format(($row->quantity)*($row->unit_price))}} đ</td>
                   </tr>
+                  @endforeach
                </tbody>
             </table>
-           <h5 class="pull-right" style="margin-right: 30px;">Tổng tiền:<span style="color: red; font-size: 20px;">    12.340.000 đ</span> </h5>         
+           <h5 class="pull-right" style="margin-right: 30px;">Tổng tiền:<span style="color: red; font-size: 20px;">   {{$order->total_price}} đ</span> </h5>         
   </section>
    <table class="pull-left" >
              <tr>
                <td style="padding: 10px;">Tổng tiền hàng</td>
-               <td style="padding: 10px;">12.340.000 đ</td>
-             </tr>
-              <tr>
-               <td style="padding: 10px;">Phí giao hàng</td>
-               <td style="padding: 10px;">40.000 đ</td>
+               <td style="padding: 10px;"> {{number_format($order->total_price)}} đ</td>
              </tr>
               <tr>
                <td style="padding: 10px;">Tổng thanh toán</td>
                <td style="padding: 10px; color: red;
-               font-size: 20px;" >12.380.000 đ</td>
+               font-size: 20px;" > {{number_format($order->total_price)}} đ</td>
              </tr>
            </table>
        <script>

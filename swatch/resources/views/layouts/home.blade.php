@@ -24,8 +24,8 @@ Home
 					   <div class="cart-left">
 							<p class="title">{{$row->product->name}}</p>
 							<div class="price1">
-							  <span class="reducedfrom">{{$row->product->price}}</span>
-							  <span class="actual">{{$row->discount}}</span>
+							  <span class="reducedfrom">{{number_format($row->product->price)}} đ</span>
+							  <span class="actual">{{number_format($row->discount)}} đ</span>
 							</div>
 						</div>
 						<div class="cart-right"> </div>
@@ -58,8 +58,8 @@ Home
 					   <div class="cart-left">
 							<p class="title">{{$row->name}}</p>
 							<div class="price1">
-							  <span class="reducedfrom"><?php if(isset($row->sale->discount)) echo $row->price.'đ'; else echo "";?> </span>
-							  <span class="actual">{{(isset($row->sale->discount))?$row->sale->discount : $row->price }} đ</span>
+							  <span class="reducedfrom"><?php if(isset($row->sale->discount)) echo number_format($row->price).'đ'; else echo "";?> </span>
+							  <span class="actual">{{(isset($row->sale->discount))?number_format($row->sale->discount) : number_format($row->price) }} đ</span>
 							</div>
 						</div>
 						<div class="cart-right"> </div>
@@ -91,8 +91,8 @@ Home
 					   <div class="cart-left">
 							<p class="title">{{$row->name}}</p>
 							<div class="price1">
-							  <span class="reducedfrom"><?php if(isset($row->sale->discount)) echo $row->price.'đ'; else echo "";?>  </span>
-							  <span class="actual">{{(isset($row->sale->discount))?$row->sale->discount : $row->price }} đ</span>
+							  <span class="reducedfrom"><?php if(isset($row->sale->discount)) echo number_format($row->price).'đ'; else echo "";?>  </span>
+							  <span class="actual">{{(isset($row->sale->discount))?number_format($row->sale->discount) : number_format($row->price) }} đ</span>
 							</div>
 						</div>
 						<div class="cart-right"><a href="/swatch/addToCart/{{$row->id}}"></a> </div>

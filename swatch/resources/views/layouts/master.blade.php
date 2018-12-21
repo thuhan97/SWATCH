@@ -5,11 +5,13 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE HTML>
-<html>
+<html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 <title>SWATCH | @yield('title')</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+
 <!-- bootstrap 3.3.7 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="{{URL::asset('bower_components/font-awesome/css/font-awesome.min.css')}}">
@@ -43,8 +45,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script src="{{URL::asset('page/js/fwslider.js')}}"></script>
 <!--end slider -->
 <script src="{{URL::asset('page/js/jquery.easydropdown.js')}}"></script>
+
 </head>
 <body>
+	
 	<div class="header-bottom">
 	    <div class="wrap">
 			<div class="header-bottom-left">
@@ -77,9 +81,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					
 				</div>
 				</li>				
-				<li><a class="color5"  href="/swatch/dong-ho-nam" id="mens">Đồng hồ Nam</a></li>
-				<li><a class="color6" href="/swatch/dong-ho-nu" id="womens">Đồng hồ nữ</a></li>
-				<li><a class="color6" href="/swatch/dong-ho-doi" id="couples">Đồng hồ đôi</a></li>
+				<li><a class="color5"  href="/swatch/cate/dong-ho-nam" id="mens">Đồng hồ Nam</a></li>
+				<li><a class="color6" href="/swatch/cate/dong-ho-nu" id="womens">Đồng hồ nữ</a></li>
+				<li><a class="color6" href="/swatch/cate/dong-ho-doi" id="couples">Đồng hồ đôi</a></li>
 				<li><a class="color7" href="/swatch/about">Giới thiệu</a></li>
 				<li><a class="color7" href="/swatch/contact">Liên hệ</a></li>
 
@@ -87,10 +91,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 		</div>
 	   <div class="header-bottom-right">
-         <div class="search">	  
-				<input type="text" name="s" class="textbox" value="Tìm kiếm" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Tìm kiếm';}">
+         <div class="search">	 
+         <form method="get" action="/swatch/search">
+         	@csrf
+				<input type="text" name="key" class="textbox" value="" placeholder="Tìm kiếm...">
 				<input type="submit" value="Subscribe" id="submit" name="submit">
 				<div id="response"> </div>
+		</form>
 		 </div>
 	  <div class="tag-list">
 		<ul class="icon1 sub-icon1 profile_img">
@@ -119,7 +126,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			  <div class="section group example">
 				<div class="col_1_of_2 span_1_of_2">
 					<ul class="f-list">
-					  <li><img src="{{URL::asset('page/images/2.png')}}"><span class="f-text">Miễn phí giao hàng bán kính 5 Km </span><div class="clear"></div></li>
+					  <li><img src="{{URL::asset('page/images/2.png')}}"><span class="f-text">Miễn phí giao hàng toàn quốc </span><div class="clear"></div></li>
 					</ul>
 				</div>
 				<div class="col_1_of_2 span_1_of_2">

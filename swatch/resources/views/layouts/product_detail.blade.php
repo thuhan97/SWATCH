@@ -15,7 +15,7 @@
 	            </div>
 		         <div class="desc1 span_3_of_2">
 		         	<h3 class="m_3">{{$product->name}}</h3>
-		             <p class="m_5">{{(isset($product->sale->discount))?$product->sale->discount : $product->price }} đ</p> <span class="reducedfrom"><?php if(isset($product->sale->discount)) echo $product->price.'đ'; else echo "";?></span>
+		             <p class="m_5">{{(isset($product->sale->discount))?number_format($product->sale->discount) : number_format($product->price) }} đ</p> <span class="reducedfrom"><?php if(isset($product->sale->discount)) echo number_format($product->price).'đ'; else echo "";?></span>
 		         	 <div class="btn_form">
 							
 							<a href="/swatch/addToCart/{{$product->id}}"><button type="button" class="btn btn-primary addToCart" id="{{$product->id}}">Thêm vào giỏ hàng</button></a>
@@ -137,27 +137,38 @@
      </div>
      <div class="toogle">
      	<h3 class="m_3">Bình luận</h3>
-     	<h5 class="count_comment">0 bình luận</h5>
+     	<h5 class="count_comment"><span id="count_comment">{{count($product->comment)}}</span> bình luận</h5>
      </br>
-     	<form method="post" class="form">
+     	<form method="post" class="form" id="form_comment">
+     		@csrf
+     		<input type="hidden" name="product_id" value="{{$product->id}}">
      		 <div class="form-group">
                 <label for="email">Tên</label>
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="name" required id="name">
               </div>
                <div class="form-group">
                 <label for="email">Nội dung</label>
-                <textarea name="comment" class="form-control"></textarea>
+                <textarea name="content" class="form-control" required id="content"></textarea>
               </div>
-     		<button class="btn btn-primary pull-right">Bình luận</button>
+     		<button class="btn btn-primary pull-right" type="submit">Bình luận</button>
      		<div class="clear"></div>
      	</form>
      </div>
+      <div id="comment">
+     @foreach($product->comment as $row)
+     
      <div class="comment">
-     	<h4 class="name_user">Sam</h4>
-     	<h6>2018-11-05</h6></br>
-     	<p class="content_commet">Tôi rất thích</p>
+     	<strong class="name_user">{{$row->name}}</strong> &nbsp;<span class="content_comment">{{$row->content}}</span>
+     	<h6>{{$row->created_at}}</h6>
+ 	</div>
+     @endforeach
+    </div>
 
-     </div>
+
+    <!-- begin wwww.htmlcommentbox.com -->
+ 
+<!-- end www.htmlcommentbox.com -->
+<script async type="text/javascript" src="http://apis.google.com/js/plusone.js?callback=gpcb"></script>
     </div>
 			
 		      @include('layouts.right_bar')
@@ -168,4 +179,33 @@
 			 <div class="clear"></div>
 		   </div>
 </div>
+<script >
+	$('#form_comment').on('submit',function(event){
+		event.preventDefault();
+		$.ajax({
+			url:'/swatch/comment',
+			data: $('#form_comment').serialize(),
+			type:"post",
+			success:function(data){
+				console.log(data);
+				//location.reload();
+
+				var title = $('#name').val();
+      			var description = $('#content').val();
+      			//var date= new TimeStamp();
+      			var d = new Date($.now());
+					date =d.getFullYear()+"-"+(d.getMonth() + 1)+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+
+				$('#name').val("");
+      			$('#content').val("");
+      			
+      			$('#comment').append('<div class="comment"><strong class="name_user">'+ title+'</strong> &nbsp; <span class="content_comment">' + description+'</span><h6>'+date+'</h6></div>');
+      			
+      			var count = parseInt($('#count_comment').text()) +1;
+      			$('#count_comment').text(count);
+
+			}
+		});
+	});
+</script>
 @endsection

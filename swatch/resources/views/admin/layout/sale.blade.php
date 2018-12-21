@@ -8,9 +8,9 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="add_sale">Thêm chương trình giảm giá </button>
   </section>
   <section class="content">
-            <table class="table table-bordered" id="table" >
+            <table class="table table-bordered table-hover" id="table" >
                <thead>
-                  <tr>
+                  <tr style="background: gainsboro;">
                      <th>Id</th>
                      <th>Mã sản phẩm</th>
                      <th>Giá cũ</th>
@@ -25,8 +25,8 @@
                  <tr>
                      <td>{{$row->id}}</td>
                      <td>{{$row->product_id}}</td>
-                     <td>{{$row->product->price}}</td>
-                     <td>{{$row->discount}}</td>
+                     <td>{{number_format($row->product->price)}}</td>
+                     <td>{{number_format($row->discount)}}</td>
                      <td>{{$row->start_at}}</td>
                      <td>{{$row->end_at}}</td>
                      <td>

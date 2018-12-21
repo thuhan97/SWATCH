@@ -8,6 +8,9 @@ class Comment extends Model
 {
     protected $table='comments';
     protected $fillable = [
-        'user_id','product_id', 'content','status',
+        'name','product_id', 'content',
     ];
+    public function product(){
+    	return $this->belongsTo(Product::class,'product_id','id');
+    }
 }

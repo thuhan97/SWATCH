@@ -7,14 +7,14 @@
                <h2 >Danh sách thành viên</h2>
                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="add_user">Thêm thành viên</button>
   </section>
-  <section class="content">
-            <table class="table table-hover" id="table" >
+  <section class="content table-reponsive" >
+            <table class="table table-hover table-striped " id="table" >
                <thead>
-                  <tr>
-                     <th>Mã thành viên</th>
+                  <tr style="background: gainsboro;">
+                     <th>#</th>
                      <th>Email</th>
                      <th>Tài khoản</th>
-                     <th>Mật khẩu</th>
+                     <th >Mật khẩu</th>
                      <th>Level</th>
                      <th>Ảnh đại diện</th>
                      <th>Thao tác</th>
@@ -69,14 +69,14 @@
                 
                     <div class="form-group">
                       <label for="email">Password</label>
-                      <input type="password" name="password" id="password" class="form-control">
+                      <input type="text" name="password" id="password" class="form-control">
                     </div>
                 <div class="form-group">
                 <label for="email">Level</label>
                 <select type="text" class="form-control" name="level" id="level" class="form-control">
                   <option value="">Level</option>
                   <option value="1">Admin</option>
-                   <option value="1">Thành viên</option>
+                   <option value="2">Thành viên</option>
                 </select>
               </div>
                <div class="form-group">
@@ -114,11 +114,11 @@
                   $('#email').val(JSON.parse(data).email);
                   $('#username').val(JSON.parse(data).username);
                   console.log(JSON.parse(data).password);
-                  $('#password').val(JSON.parse(data).password);
+                  $('#password').attr('disabled','disabled');
                   $('#level').val(JSON.parse(data).level);
                   // $('#myModal').modal('show');
                   
-                  console.log(JSON.parse(data).name);
+                  //console.log(JSON.parse(data).name);
                 }
               }); 
             });
@@ -128,7 +128,9 @@
                $('#user_id').val('');
                $('#email').val('');
                $('#username').val('');
+               $('#password').removeAttr('disabled');
                $('#password').val('');
+               $('#level').val('');
                $('#avatar').val('');
 
             });

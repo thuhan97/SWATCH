@@ -11,6 +11,7 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "melihovv/laravel-shopping-cart": "^5.7",
+        "pragmarx/tracker": "^3.3",
         "yajra/laravel-datatables-oracle": "^8.9"
     },
     "require-dev": {

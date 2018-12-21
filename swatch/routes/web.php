@@ -18,7 +18,7 @@ Route::get('/', function () {
 // Route::get('/admin',function(){
 // 	return view('admin.layout.index');
 // });
-Route::group(['prefix'=>'admin'],function(){
+Route::group(['prefix'=>'admin', 'middleware'=>'auth'],function(){
 	Route::get('/',[
 		'uses'=>'Admin\AdminController@index',
 		'as'=>'admin.index'
@@ -49,16 +49,27 @@ Route::group(['prefix'=>'admin'],function(){
 	Route::get('sales/delete/{id}', 'Admin\SaleController@delete');
 
 
-	Route::get('users', 'Admin\UserController@index');
-	Route::post('users/create','Admin\UserController@create');
-	Route::get('users/{id}', 'Admin\UserController@show');
-	Route::post('users/update/{id}', 'Admin\UserController@update');
-	Route::get('users/delete/{id}', 'Admin\UserController@delete');
+	Route::get('users', 'Admin\UserController@index')->middleware('Checklevel');
+	Route::post('users/create','Admin\UserController@create')->middleware('Checklevel');
+	Route::get('users/{id}', 'Admin\UserController@show')->middleware('Checklevel');
+	Route::post('users/update/{id}', 'Admin\UserController@update')->middleware('Checklevel');
+	Route::get('users/delete/{id}', 'Admin\UserController@delete')->middleware('Checklevel');
 
 	Route::get('orders', 'Admin\OrderController@index');
+	Route::post('order/update/{id}','Admin\OrderController@update');
 	Route::get('orderDetail/{id}', 'Admin\OrderDetailController@index');
 	Route::get('customers', 'Admin\CustomerController@index');
+	Route::get('customers/delete/{id}', 'Admin\CustomerController@delete');
 	Route::get('comments', 'Admin\CommentController@index');
+	Route::get('contacts', 'Admin\ContactController@index');
+	Route::get('/profile',function(){
+		return view('admin.layout.profile');
+	});
+	Route::post('/profile/password/update','Admin\UserController@resetPassword');
+	Route::post('/profile/avatar/update','Admin\UserController@updateAvatar');
+	Route::get('/mail/show/{id}','Admin\ContactController@show');
+	Route::post('/mail/send/{id}','Admin\ContactController@send');
+
 });
  Route::get('login',[
 	'uses'=>'Admin\LoginController@getLogin',
@@ -81,19 +92,31 @@ Route::group(['prefix'=>'admin'],function(){
  	Route::get('/deleteCart/{id}','Page\CartController@delete');
  	Route::get('/deleteAllCart','Page\CartController@clear');
  	
+ 	Route::get('/checkout',function(){
+ 		abort(404,"Not Found action");
+ 	});
  	Route::post('/checkout','Page\CartController@buy');
- 		
- 	Route::post('/complete','Admin\CustomerController@add');
+ 	Route::get('/order',function(){
+ 		abort(404,"Not Found action");
+ 	});	
+ 	Route::post('/order','Page\CartController@add');
+
+ 	Route::get('/order/complete',function(){
+ 		Session::forget('checkout'); 
+ 		return view('layouts.complete');
+ 	})->middleware('BeforeMiddleware');
 
 
  	// Route::get('/master','Page\BrandController@index');
- 	Route::get('/{gender}','Page\ProductController@getByGender');
+ 	Route::get('/cate/{gender}','Page\ProductController@getByGender');
  	Route::get('/brand/{slug}','Page\BrandController@getBySlug');
  	Route::get('/product/{id}','Page\ProductController@detail');
-
- 	
- 	
-
+ 	Route::post('/comment','Admin\CommentController@create');
+ 	Route::get('/comment/delete/{id}','Admin\CommentController@delete');
+ 	Route::get('search','Page\HomeController@getSearch');
+ 	Route::get('/filter','Page\ProductController@getFilter');
+ 	Route::post('/contact','Admin\ContactController@create');
+ 	Route::get('/contact/delete/{id}','Admin\ContactController@delete');
 
  });
 // Auth::routes();

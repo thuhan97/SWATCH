@@ -1,42 +1,40 @@
 <div class="rsingle span_1_of_single">
+	<form action="/swatch/filter" method="get">
+		@csrf
 				<section class=" sky-form">
-					<h5 class="m_1">Mẫu đồng hồ</h5>
-					<ul class="kids">
-						<li><a href="#">Đồng hồ nam</a></li>
-						<li><a href="#">Đồng hồ nữ</a></li>
-						<li class="last"><a href="#">Đồng hồ đôi</a></li>
-					</ul>
+					<h5 class="m_1">Thương hiệu</h5>
+					<select name="brand" style="width: 80%px; height: 30px;">
+						<option value="">Thương hiệu</option>
+						@foreach($brand as $row)
+						<option value="{{$row->id}}">{{$row->name}}</option>>
+						@endforeach
+					</select>
+					
 				</section>
+			</br>
                 <section class="sky-form">
 					<h4>Khoảng giá</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Dưới 2,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>2,000,000 đ-4,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>4,000,000 đ-6,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>6,000,000 đ-9,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>9,000,000 đ-15,000,000 đ</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Trên 15,000,000 đ</label>
-								
-							</div>
-						</div>
+						
+							<div class="col col-4" style="margin-top: 15px;">
+								<input type="number" name="min_price" style="width: 80px; height: 30px;" min="0" value="0" > - 
+								<input type="number" name="max_price" style="width: 80px; height: 30px; " max="20000000" value="20000000"> VNĐ	
+							</div> 
 		        </section>
+		    </br>
 		       <section  class="sky-form">
-					<h4>Thương hiệu</h4>
-						<div class="row row1 scroll-pane">
-							<div class="col col-4">
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Gucci</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Edox</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Tissot</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Hamilton</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox" ><i></i>Ogival</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Calvin Kelin</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Citizen</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Seiko</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Orient</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Michel Herbelin</label>
-								<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Elle</label>
+					<h4>Giới tính</h4>
+						
+							<div class="col col-4" style="margin-top: 15px;">
+								<select name="gender" style="width: 80%; height: 30px;">
+									<option value="">Giới tính</option>
+									<option value="dong-ho-nam">Đồng hồ nam</option>
+									<option value="dong-ho-nu">Đồng hồ nữ</option>
+									<option value="dong-ho-doi">Đồng hồ đôi</option>
+								</select>
 							</div>
-						</div>
+						
 		       </section>
+		   </br>
+		       <button class="btn btn-danger" style="width: 100%;">Lọc sản phẩm</button>
+		   </form>
 		    </div>

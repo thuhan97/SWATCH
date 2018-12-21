@@ -10,9 +10,9 @@
   </button>
   </section>
   <section class="content">
-            <table class="table table-bordered" id="table" >
+            <table class="table table-bordered table-hover table-striped" id="table" >
                <thead>
-                  <tr>
+                  <tr style="background: gainsboro; ">
                      <th>Mã sản phẩm</th>
                      <th>Tên sản phẩm</th>
                      <th>Ảnh minh họa</th>
@@ -32,7 +32,7 @@
                     <td><span class="infor-product">{{$row->id}}</span></td>
                     <td><span class="infor-product">{{$row->name}}</span></td>
                     <td><span class="infor-product"><img src="{{URL::asset('dist/img/product/'.$row->image)}}" style="width: 50px;height: 50px;"></span></td>
-                    <td><span class="infor-product">{{$row->price}}</span></td>
+                    <td><span class="infor-product">{{number_format($row->price)}}</span></td>
                     <td><span class="infor-product">{{$row->brand->name}}</span></td>
                     <td><span class="infor-product">
                       <?php if($row->gender=='dong-ho-nam') echo 'Đồng hồ nam'; 

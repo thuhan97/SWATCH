@@ -33,6 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+  <!-- <script src="https://cdn.datatables.net/plug-ins/1.10.19/i18n/Vietnamese.json"></script> -->
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

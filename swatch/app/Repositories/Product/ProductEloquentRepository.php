@@ -21,7 +21,7 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
 		return $result;
 	}
 	public function getByGender($gender){
-		$result= $this->model->where('gender',$gender)->get();
+		$result= $this->model->where('gender',$gender)->paginate(9);
 		return $result;
 	}
 
@@ -32,6 +32,10 @@ class ProductEloquentRepository extends EloquentRepository implements ProductRep
 	public function getType($id){
 		$brand =$this->model->find($id)->brand->id;
 		$result= $this->model->where('brand_id',$brand)->limit(10)->get();
+		return $result;
+	}
+	public function getSearch($key){
+		$result=$this->model->where('name','like','%'.$key.'%')->orWhere('price',$key)->paginate(9);
 		return $result;
 	}
 }

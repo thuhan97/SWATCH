@@ -34,9 +34,9 @@
                              <tr>
                                     <td width="25%"><img src="{{URL::asset('dist/img/product/'.$row->attributes->image)}}"></td>
                                     <td><span>{{$row->name}}</span></td>
-                                    <td><span>{{$row->price}} đ</span></td>
+                                    <td><span>{{number_format($row->price)}} đ</span></td>
                                     <td><span>{{$row->quantity}}</span></td>
-                                    <td><span>{{$row->getPriceSum()}} đ</span></td>
+                                    <td><span>{{number_format($row->getPriceSum())}} đ</span></td>
                                 </tr> 
                                 @endforeach
                             </tbody>
@@ -45,15 +45,11 @@
                             <table class=" pull-right">
                                 <tr>
                                     <td>Tổng tiền hàng</td>
-                                    <td>{{Cart::getTotal()}} đ</td>
-                                </tr>
-                                <tr>
-                                    <td>Thuế</td>
-                                    <td>{{Cart::getTotal()*0.05}}  đ</td>
+                                    <td>{{number_format(Cart::getTotal())}} đ</td>
                                 </tr>
                                 <tr>
                                     <td>Tổng thanh toán</td>
-                                    <td><p>{{Cart::getTotal() + Cart::getTotal()*0.05}} đ</p></td>
+                                    <td><p>{{number_format(Cart::getTotal())}} đ</p></td>
                                 </tr>
                             </table>
                              <div class="clear"></div>
@@ -86,10 +82,11 @@ $("#complete").click(function (event) {
     console.log(data);
     $.ajax({
     type:"post",
-    url:'/swatch/complete',
+    url:'/swatch/order',
     data:data,
     success:function(data){
         console.log(data);
+        location.href= "/swatch/order/complete";
      }
     });
 });

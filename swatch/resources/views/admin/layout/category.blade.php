@@ -8,12 +8,12 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="add_cate" >Thêm danh mục </button></section>
   </section>
   <section class="content">
-            <table class="table table-bordered" id="table" style="width:800px;">
+            <table class="table table-bordered table-hover table-striped" id="table" >
                <thead>
-                  <tr>
-                     <th>Số danh mục</th>
+                  <tr style="background: gainsboro; ">
+                     <th style="width: 15%;">Số danh mục</th>
                      <th>Tên danh mục</th>
-                     <th>Thao tác</th>
+                     <th style="width: 20%;">Thao tác</th>
                   </tr>
                </thead>
                <tbody>
@@ -22,8 +22,8 @@
                   <td>{{$row->id}}</td>
                   <td>{{$row->name}}</td>
                   <td>
-                  <a data-toggle="modal"  id="{{$row->id}}" class="edit_cate" data-target="#myModal" ><i class="fa fa-edit" ></i></a>
-                  <a id="{{$row->id}}" class="delete_cate" > <i class="fa fa-trash"></i></a>
+                  <a data-toggle="modal"  id="{{$row->id}}" class="edit_cate" data-target="#myModal" ><p class="btn btn-primary">Cập nhật</p></a>
+                  <a id="{{$row->id}}" class="delete_cate" > <p class="btn btn-danger">Xóa</p></a>
                   </td>
                 </tr>
                 @endforeach
@@ -51,15 +51,15 @@
                 <label for="email">Tên danh mục</label>
                 <input type="text" class="form-control" name="name" id="name" value="">
               </div>
-           </form>     
+             
         </div>  
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="submit"  class="btn btn-primary pull-left insert">Lưu</button>
+          <button type="submit"  class="btn btn-primary pull-left insert" >Lưu</button>
           <button type="button" class="btn btn-danger" data-dismiss="modal" >Đóng</button>
         </div>
-     
+      </form>  
       </div>
     </div>
   </div>
@@ -115,6 +115,43 @@
             else{
               var url = '/admin/categories/update/'+id;
             }
+              $.ajax({
+                type:"post",
+                url:url,
+                data: $("#form_insert").serialize() ,
+                success:function(data){
+                   // //$('#myModal').modal('hide');
+                    console.log(data);
+                    location.reload(); 
+                },
+                 error: function() {
+                 console.log("error");
+                }
+              });
+            });
+
+           $('.insert').click(function(event){
+              event.preventDefault();
+              email=$('#email').val();
+              title=$('#email').val();
+              content=$('#content').val();
+              if(name==''){
+                $('#name').after('<span style="color: red;">Name is required.</span>');
+                return false;
+              }
+               if(title==''){
+                $('#title').after('<span style="color: red;">Title is required.</span>');
+                return false;
+              }
+               if(title==''){
+                $('#title').after('<span style="color: red;">Content is required.</span>');
+                return false;
+              }
+
+              id=$('#id').val();
+            
+              var url = '/admin/mail/send/'+id;
+            
               $.ajax({
                 type:"post",
                 url:url,

@@ -29,14 +29,14 @@
                                 <tr>
                                      <td><img src="{{URL::asset('dist/img/product/'.$row->attributes->image)}}" class="cart_item_img"></td>
                                     <td><span>{{$row->name}}</span></td>
-                                    <td><span>{{$row->price}} đ</span></td>
+                                    <td><span>{{number_format($row->price)}} đ</span></td>
                                     <td>
                                         <a href="/swatch/updateCart/{{$row->id}}/1"><input type="button" name="plus"  value="+"></a>
                                         <input type="text" name="quantity" class="quantity" value="{{$row->quantity}}"  min="1" max="30" style="text-align: center; max-width: 50px;">
                                         <a href="/swatch/updateCart/{{$row->id}}/-1"><input type="button" name="sub"  value="-"></a>
                                            
                                     </td>
-                                    <td><span>{{$row->getPriceSum()}} đ</span></td>
+                                    <td><span>{{number_format($row->getPriceSum())}} đ</span></td>
                                     <td><span  ><a style=" color: red;" href="" id="{{$row->id}}" class="delCart">Xóa</a></span></td>
                                 </tr>   
                                 @endforeach
@@ -46,7 +46,7 @@
                        <div class="cart-bottom " >
                         <a href="" id="deleteAllCart" style="color: red;">Xóa toàn bộ giỏ hàng</a>
                     </br>
-                        <p>Tổng tiền hàng: <span>{{Cart::getTotal()}} đ</span> </p></br>
+                        <p>Tổng tiền hàng: <span>{{number_format(Cart::getTotal())}} đ</span> </p></br>
                        <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal">Mua hàng</button>
 
 <div class="modal fade" id="myModal" role="dialog" >

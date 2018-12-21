@@ -7,17 +7,24 @@
        <div class="wrap">
 	   <h3 class="m_3">Hãy liên hệ với chúng tôi nếu bạn có bất ký thắc mắc nào !</h3>
 		   <div class="content-top">
-			   <form method="post" action="contact-post.html">
+		   	@if (session('status'))
+    	<div class="alert alert-success">
+        {{ session('status') }}
+    	</div>
+		@endif
+			   <form method="post" action="/swatch/contact">
+			   	@csrf
+			   	<input type="hidden" name="status" value="0">
 					<div class="to">
-                     	<input type="text" class="text" value="" placeholder="Tên" }">
-					 	<input type="text" class="text" value="" placeholder="Email" style="margin-left: 10px">
+                     	<input type="text" class="text" value="" placeholder="Tên"  name="name" }" required="">
+					 	<input type="text" class="text" value="" placeholder="Email" style="margin-left: 10px" name="email" required="">
 					</div>
 					<div class="to">
-                     	<input type="text" class="text" value="" placeholder="Website của bạn">
-					 	<input type="text" class="text" value="" placeholder="Chủ đề" style="margin-left: 10px">
+                     	<input type="text" class="text" value="" placeholder="Website của bạn  (Có thể để trống)" name="website">
+					 	<input type="text" class="text" value="" placeholder="Chủ đề" style="margin-left: 10px" name="title" required="">
 					</div>
 					<div class="text">
-	                   <textarea value="" placeholder="Nội dung"  style="width: 1174.09px;"></textarea>
+	                   <textarea value="" placeholder="Nội dung"  style="width: 1174.09px;" name="content" required=""></textarea>
 	                </div>
 	                <div class="submit">
 	               		<input type="submit" value="Submit" class="btn btn-primary">

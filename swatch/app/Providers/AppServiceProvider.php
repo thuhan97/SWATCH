@@ -5,7 +5,12 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\RepositoryInterface;
 use App\Category;
+use App\Brand;
+use App\Order;
+use App\Contact;
+use App\Customer;
 use Cart;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,7 +23,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        $data['categories']= Category::all();                     
+        $data['categories']= Category::all();  
+        $data['brand']=Brand::all(); 
+        $data['count'] = count(Order::where('status',1)->get());
+        $data['contact'] = count(Contact::where('status',0)->get()); 
+        $data['customer']=count(Customer::all());
+        $cancel= count(Order::where('status',3)->get());
+        $order= count(Order::all());
+        $data['cancel_rate']=( $cancel/$order)*100;
+    
         view()->share($data);
 
     }
@@ -54,6 +67,22 @@ class AppServiceProvider extends ServiceProvider
        $this->app->singleton(
         \App\Repositories\Customer\CustomerRepositoryInterface::class,
         \App\Repositories\Customer\CustomerEloquentRepository::class
+    );
+       $this->app->singleton(
+        \App\Repositories\Order\OrderRepositoryInterface::class,
+        \App\Repositories\Order\OrderEloquentRepository::class
+    );
+       $this->app->singleton(
+        \App\Repositories\OrderDetail\OrderDetailRepositoryInterface::class,
+        \App\Repositories\OrderDetail\OrderDetailEloquentRepository::class
+    );
+       $this->app->singleton(
+        \App\Repositories\Comment\CommentRepositoryInterface::class,
+        \App\Repositories\Comment\CommentEloquentRepository::class
+    );
+       $this->app->singleton(
+        \App\Repositories\Contact\ContactRepositoryInterface::class,
+        \App\Repositories\Contact\ContactEloquentRepository::class
     );
     }
 }

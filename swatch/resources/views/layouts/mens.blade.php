@@ -1,43 +1,19 @@
 @extends('layouts.master')
 @section('title')
-	Mens
+	<?php if($gender=='dong-ho-nam') echo "Đồng hồ nam"; elseif($gender=='dong-ho-nu') echo "Đồng hồ nữ"; else echo "Đồng hồ đôi";?>
 @endsection
 @section('slider')
 @include('layouts.slider')
 @endsection
 @section('content')
-     <div class="wrap">
+    <div class="wrap">
 		<div class="cont span_2_of_3">
 		  	<h2 class="head"><?php if($gender=='dong-ho-nam') echo "Đồng hồ nam"; elseif($gender=='dong-ho-nu') echo "Đồng hồ nữ"; else echo "Đồng hồ đôi";?></h2>
-		  	<div class="mens-toolbar">
-              <div class="sort">
-               	<div class="sort-by">
-		            <label>Sắp xếp theo</label>
-		            <select>
-		                            <option value="">
-		                    Tên                </option>
-		                            <option value="">
-		                    Giá                </option>
-		            </select>
-		            <a href=""><img src="{{URL::asset('page/images/arrow2.gif')}}" alt="" class="v-middle"></a>
-               </div>
-    		</div>
-        <div class="pager">   
-        	<div class="limiter visible-desktop">
-            <label>Hiển thị</label>
-            <select>
-                            <option value="" selected="selected">
-                    9                </option>
-                            <option value="">
-                    15                </option>
-                            <option value="">
-                    30                </option>
-                        </select> một trang       
-             </div>
-	   		<div class="clear"></div>
-    	</div>
+		  	<div style="border-top: 1px solid #ccc; margin-bottom: 15px;">
+            
      	<div class="clear"></div>
 		</div>
+		<?php if(count($products)==0) echo '<h3>Không có sản phẩm nào.</h3>'; else{?>
 		<div class="top-box">
 				<?php $i=0;?>
 				@foreach($products as $row)
@@ -52,8 +28,8 @@
 					   <div class="cart-left">
 							<p class="title">{{$row->name}}</p>
 							<div class="price1">
-							 <span class="reducedfrom"><?php if(isset($row->sale->discount)) echo $row->price.'đ'; else echo "";?>  </span>
-							  <span class="actual">{{(isset($row->sale->discount))?$row->sale->discount : $row->price }} đ</span>
+							 <span class="reducedfrom"><?php if(isset($row->sale->discount)) echo number_format($row->price).'đ'; else echo "";?>  </span>
+							  <span class="actual">{{(isset($row->sale->discount))?number_format($row->sale->discount) : number_format($row->price) }} đ</span>
 							</div>
 						</div>
 						<div class="cart-right"> </div>
@@ -68,7 +44,9 @@
 				?>
 				@endforeach
 			</div>
-			<div class="clear"></div>		   	 							 			    
+			{!! $products->links() !!}
+			<div class="clear"></div>	
+			<?php }?>	   	 							 			    
 		  </div>
 			@include('layouts.right_bar')
 			<div class="clear"></div>

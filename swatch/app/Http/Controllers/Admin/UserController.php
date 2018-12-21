@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Repositories\User\UserRepositoryInterface;
 use Validator;
@@ -85,11 +86,12 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
          $validation= Validator::make($request->all(), [
-        'email' => 'required|email',
-        'username' => 'required',
-        'password'=>'required',
+        'email' => 'required|email|unique:users,email,'.$id,
+        'username' => 'required|unique:users,username,'.$id,
+        //'password'=>'required',
         'level'=>'required',
-        'avatar' => 'required|image|mimes:jpg,jpeg,png,gif'
+        'avatar' => 'required|image|mimes:jpg,jpeg,png,gif',
+
     ]);
        //echo json_encode("data");
     if ($validation->passes()) {
@@ -100,7 +102,7 @@ class UserController extends Controller
                $this->userRepository->update($id,[
                     'email'=>$request->get('email'),
                     'username'=>$request->get('username'),
-                    'password'=>bcrypt($request->get('password')),
+                    //'password'=>bcrypt($request->get('password')),
                     'level'=>$request->get('level'),
                     'avatar'=>$new_name
                ]);
@@ -126,5 +128,55 @@ class UserController extends Controller
         //
         $this->userRepository->delete($id);
         echo json_encode((["success"=>true]));
+    }
+
+    public function resetPassword(Request $request){
+       // return $request->all();
+        $user= $this->userRepository->find(Auth::user()->id);
+        $validation= Validator::make($request->all(), [
+            'password' => 'required',
+            'new_password' => 'required|min:6|different:password',
+        ]);
+        if($validation->passes()){
+            if (Hash::check($request->password, $user->password)) { 
+               $user->fill([
+                'password' => Hash::make($request->new_password)])->save();
+               //print_r('Mật khẩu đã thay đổi');
+
+               return  redirect('/login');
+
+            } else {  
+                //print_r('Mật khẩu không đúng');
+                return redirect()->back()->with('error','Mật khẩu không đúng.');
+            }
+        }
+        else {
+            //print_r('lỗi');
+        return redirect()->back()->withErrors($validation->errors());
+        }
+    }
+
+   public function updateAvatar(Request $request)
+    {
+         $validation= Validator::make($request->all(), [
+        'avatar' => 'required|image|mimes:jpg,jpeg,png,gif|size:max:300',
+
+    ]);
+       //echo json_encode("data");
+    if ($validation->passes()) {
+               $image= $request->file('avatar');
+               $new_name=rand().'.'.$image->getClientOriginalExtension();
+               $image->move(public_path('dist/img/user'),$new_name);
+               $id=Auth::user()->id;
+               $this->userRepository->update($id,[
+                    'avatar'=>$new_name
+               ]);
+               return redirect()->back();
+            
+     }
+     else {
+        //print_r('Lỗi');
+        return redirect()->back()->withErrors($validation->errors());
+        }
     }
 }

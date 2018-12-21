@@ -36,4 +36,12 @@ class HomeController extends Controller
         $salePr= $this->saleRepository->getSale();
         return view('layouts.home',compact('newPr','specialPr','salePr'));
     }
+
+    public function getSearch(Request $request){
+        // print_r($request->key);
+        $product =$this->productRepository->getSearch($request->key);
+        $key= $request->key;
+         return view('layouts.search', compact('product','key'));
+         // print_r($product);
+    }
 }

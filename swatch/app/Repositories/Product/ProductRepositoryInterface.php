@@ -6,6 +6,8 @@ interface ProductRepositoryInterface{
 	public function getByGender($gender);
 	public function getById($id);
 	public function getType($id);
+	public function getSearch($key);
+	
 	
 }
 ?>

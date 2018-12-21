@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use PragmaRX\Tracker\Vendor\Laravel\Facade ;
+
 
 class AdminController extends Controller
 {
@@ -13,7 +15,7 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -24,5 +26,9 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.layout.dashboard');
+
+        // $visitor= $_SERVER['REMOTE_ADDR'];
+
+        // print_r($visitor);
     }
 }
